@@ -41,7 +41,7 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'assignee_id');
     }
 
-        public function isAdmin()
+    public function isAdmin()
     {
         return $this->role === 'admin';
     }
