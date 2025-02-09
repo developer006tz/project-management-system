@@ -51,14 +51,14 @@ return Application::configure(basePath: dirname(__DIR__))
                 $message = config('app.debug')
                     ? $e->getMessage()
                     : match (get_class($e)) {
-                        ValidationException::class => 'Invalid input data',
-                        ModelNotFoundException::class => 'Resource not found',
-                        AuthenticationException::class => 'Unauthenticated',
-                        AuthorizationException::class => 'Unauthorized',
-                        NotFoundHttpException::class => 'Endpoint not found',
-                        MethodNotAllowedHttpException::class => 'Method not allowed',
-                        ThrottleRequestsException::class => 'Too many requests',
-                        default => 'An unexpected error occurred'
+                        ValidationException::class => 'The provided data does not meet our validation requirements',
+                        ModelNotFoundException::class => 'The requested resource could not be found in our system',
+                        AuthenticationException::class => 'Please sign in to access this resource',
+                        AuthorizationException::class => 'You do not have permission to perform this action',
+                        NotFoundHttpException::class => 'The requested URL endpoint was not found on our server',
+                        MethodNotAllowedHttpException::class => 'This type of request is not supported for this endpoint',
+                        ThrottleRequestsException::class => 'Request limit exceeded. Please try again later',
+                        default => 'An internal system error occurred. Our team has been notified'
                     };
 
                 $response = [
