@@ -30,4 +30,14 @@ class User extends Authenticatable
             'updated_at' => 'datetime:Y-m-d H:i:s',
         ];
     }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'manager_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assignee_id');
+    }
 }
