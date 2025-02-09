@@ -18,7 +18,7 @@ class Project extends Model
 
     public function manager()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'manager_id');
     }
 
     public function tasks()
