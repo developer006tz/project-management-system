@@ -19,8 +19,8 @@ class AuthService
         if (! Auth::attempt($credentials)) {
             throw new AuthenticationException('invalid credentials');
         }
-
         $user = $this->userRepository->findByEmail($credentials['email']);
+        $this->revokeTokens($user);
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return [$user, $token];

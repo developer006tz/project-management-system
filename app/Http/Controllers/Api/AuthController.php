@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
@@ -51,8 +50,9 @@ class AuthController extends Controller
         );
     }
 
-    public function logout(Request $request, User $user): JsonResponse
+    public function logout(Request $request)
     {
+        $user = $request->user();
         $this->authService->revokeTokens($user);
 
         return $this->successResponse(
