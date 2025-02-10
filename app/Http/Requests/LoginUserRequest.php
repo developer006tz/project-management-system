@@ -15,7 +15,7 @@ class LoginUserRequest extends FormRequest
     {
         return [
             'email' => 'required|email|max:100',
-            'password' => 'required|string',
+            'password' => 'required',
         ];
     }
 
@@ -25,6 +25,8 @@ class LoginUserRequest extends FormRequest
             'email.required' => 'Please provide an email address',
             'email.email' => 'Please provide a valid email address',
             'email.max' => 'The email cannot exceed 100 characters',
+
+            'password.required' => 'Please provide your password',
         ];
 
     }

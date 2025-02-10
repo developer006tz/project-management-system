@@ -31,7 +31,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         $task->post('/projects/{id}/tasks', [TaskController::class, 'createTask'])->middleware('role:manager');
         $task->get('/projects/{id}/tasks', [TaskController::class, 'viewProjectTasks']);
         $task->put('/tasks/{id}', [TaskController::class, 'updateTask']);
-        $task->patch('/tasks/{id}/status', [TaskController::class, 'updateTask']);
+        $task->patch('/tasks/{id}/status', [TaskController::class, 'markAsCompleted']);
     });
 
 });

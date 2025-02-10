@@ -2,16 +2,17 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Task;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class UpdateTaskRequest extends FormRequest
 {
-    public function authorize(): bool
+    public function authorize()
     {
-        $task = $this->route('task');
 
-        return $this->user()->can('update', $task);
+        return $this->user()->can('update', Task::class);
+
     }
 
     public function rules(): array
@@ -32,7 +33,6 @@ class UpdateTaskRequest extends FormRequest
     {
         return [
             'name.string' => 'The task name must be text only',
-
             'name.max' => 'The task name cannot exceed 255 characters',
 
             'description.string' => 'The task description must be text only',
@@ -42,7 +42,6 @@ class UpdateTaskRequest extends FormRequest
             'assignee_id.exists' => 'The selected assignee does not exist or is not a regular user',
 
             'status.string' => 'The status must be text only',
-
             'status.in' => 'Status must be either pending, in progress, or completed',
         ];
     }

@@ -18,7 +18,6 @@ class StoreTaskRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'required|string',
-            'project_id' => 'required|exists:projects,id',
             'assignee_id' => [
                 'required',
                 Rule::exists('users', 'id')->where('role', 'user'),
@@ -36,9 +35,6 @@ class StoreTaskRequest extends FormRequest
 
             'description.required' => 'Please provide a description for the task',
             'description.string' => 'The task description must be text only',
-
-            'project_id.required' => 'Please select a project for this task',
-            'project_id.exists' => 'The selected project does not exist',
 
             'assignee_id.required' => 'Please select an assignee for this task',
             'assignee_id.exists' => 'The selected assignee does not exist or is not a regular user',
