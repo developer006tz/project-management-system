@@ -32,7 +32,7 @@ class RegisterUserRequest extends FormRequest
             'email.string' => 'The email must be text only',
             'email.email' => 'Please provide a valid email address',
             'email.max' => 'The email cannot exceed 100 characters',
-            'email.unique' => 'This email is already registered in our system',
+            'email.unique' => 'User with this email has already been registered, please use another email',
 
             'password.required' => 'Password is mandatory for registration',
             'password.string' => 'The password must be text only',
