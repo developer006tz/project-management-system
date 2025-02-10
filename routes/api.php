@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         $project->get('/projects/{id}', [ProjectController::class, 'viewSingleProject']);
         $project->put('/projects/{id}', [ProjectController::class, 'updateProject'])->middleware('role:admin,manager');
         $project->delete('/projects/{id}', [ProjectController::class, 'deleteProject'])->middleware('role:admin,manager');
+    });
+
+    Route::group([], function ($task) {
+        $task->post('/projects/{id}/tasks', [TaskController::class, 'createTask'])->middleware('role:manager');
+        $task->get('/projects/{id}/tasks', [TaskController::class, 'viewProjectTasks']);
+        $task->put('/tasks/{id}', [TaskController::class, 'updateTask']);
+        $task->patch('/tasks/{id}/status', [TaskController::class, 'updateTask']);
     });
 
 });

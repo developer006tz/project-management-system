@@ -31,6 +31,7 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'name.string' => 'The project name must be text only',
+
             'name.max' => 'The project name cannot exceed 100 characters',
 
             'description.string' => 'The project description must be text only',
@@ -40,6 +41,7 @@ class UpdateProjectRequest extends FormRequest
             'start_date.date' => 'The start date must be a valid date',
 
             'end_date.date' => 'The end date must be a valid date',
+
             'end_date.after' => 'The end date must be after the start date',
         ];
     }

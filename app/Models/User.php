@@ -41,6 +41,15 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'assignee_id');
     }
 
+    public function isTaskAssignee(?Task $task): bool
+    {
+        if (! $task) {
+            return false;
+        }
+
+        return $this->id === $task->assignee_id;
+    }
+
     public function isAdmin()
     {
         return $this->role === 'admin';
