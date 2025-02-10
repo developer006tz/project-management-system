@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\Project;
 use App\Services\TaskService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class TaskController extends Controller
         private readonly TaskService $taskService
     ) {}
 
-    public function createTask(StoreTaskRequest $request, $id): JsonResponse
+    public function createTask(StoreTaskRequest $request, Project $id): JsonResponse
     {
         $validatedData = $request->validated();
         $validatedData['project_id'] = $id;

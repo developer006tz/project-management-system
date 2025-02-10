@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\UserController;
@@ -30,8 +31,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::group([], function ($task) {
         $task->post('/projects/{id}/tasks', [TaskController::class, 'createTask'])->middleware('role:manager');
         $task->get('/projects/{id}/tasks', [TaskController::class, 'viewProjectTasks']);
-        $task->put('/tasks/{id}', [TaskController::class, 'updateTask']);
+        $task->put('/tasks/{id}', [TaskController::class, 'updateTask'])->middleware('role:manager');
         $task->patch('/tasks/{id}/status', [TaskController::class, 'markAsCompleted']);
+    });
+
+    Route::group([], function ($dashboard) {
+        $dashboard->get('/dashboard', [DashboardController::class, 'viewSystemSummary']);
     });
 
 });
