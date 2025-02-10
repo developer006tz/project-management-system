@@ -28,5 +28,4 @@ class UserRepository implements UserRepositoryInterface
     {
         return $user->update($attributes);
     }
-       
 }

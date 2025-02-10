@@ -14,6 +14,7 @@ class UserController extends Controller
     public function __construct(
         private readonly UserManagementService $userManagementService
     ) {}
+
     public function assignRole(UpdateUserRoleRequest $request): JsonResponse
     {
         try {

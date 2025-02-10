@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\ValidateRole;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,7 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias(['role' => ValidateRole::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (Throwable $e, Request $request) {
@@ -57,7 +58,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         ModelNotFoundException::class => 'The requested resource could not be found in our system',
                         AuthenticationException::class => 'Please sign in to access this resource',
                         AuthorizationException::class => 'You do not have permission to perform this action',
-                        AccessDeniedHttpException::class =>  'You do not have permission to perform this action',
+                        AccessDeniedHttpException::class => 'You do not have permission to perform this action',
                         NotFoundHttpException::class => 'The requested URL endpoint was not found on our server',
                         MethodNotAllowedHttpException::class => 'This type of request is not supported for this endpoint',
                         ThrottleRequestsException::class => 'Request limit exceeded. Please try again later',

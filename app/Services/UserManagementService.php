@@ -17,7 +17,7 @@ class UserManagementService
     {
         $targetUser = $this->userRepository->findById($userId);
 
-        if (!$currentUser->isAdmin()) {
+        if (! $currentUser->isAdmin()) {
             throw new AuthorizationException('Only administrators can update user roles.');
         }
 
