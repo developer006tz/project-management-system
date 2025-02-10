@@ -18,9 +18,9 @@ class TaskService
         return new TaskResource($task);
     }
 
-    public function getProjectTasks(int $projectId, int $perPage = 10)
+    public function getProjectTasks(int $projectId, array $filters = [], int $perPage = 10)
     {
-        return $this->taskRepository->getProjectTasks($projectId, $perPage);
+        return $this->taskRepository->getProjectTasks($projectId, $filters, $perPage);
     }
 
     public function updateTask(int $id, array $data): TaskResource

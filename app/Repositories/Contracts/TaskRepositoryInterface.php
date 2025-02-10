@@ -3,7 +3,6 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Task;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface TaskRepositoryInterface
 {
@@ -11,7 +10,7 @@ interface TaskRepositoryInterface
 
     public function findById(int $id): Task;
 
-    public function getProjectTasks(int $projectId, int $perPage = 10): LengthAwarePaginator;
+    public function getProjectTasks(int $projectId, array $filters = [], int $perPage = 10);
 
     public function update(Task $task, array $attributes): bool;
 }

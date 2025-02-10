@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Http\Requests\ViewAllTasksRequest;
 use App\Models\Project;
 use App\Services\TaskService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class TaskController extends Controller
@@ -31,10 +31,11 @@ class TaskController extends Controller
         );
     }
 
-    public function viewProjectTasks(Request $request, $id): JsonResponse
+    public function viewProjectTasks(ViewAllTasksRequest $request, $id): JsonResponse
     {
+        $filters = $request->validated();
         $perPage = $request->input('per_page', 10);
-        $tasks = $this->taskService->getProjectTasks($id, $perPage);
+        $tasks = $this->taskService->getProjectTasks($id, $filters, $perPage);
 
         return $this->successResponse(
             $tasks,
