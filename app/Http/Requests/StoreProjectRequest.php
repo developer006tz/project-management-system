@@ -16,7 +16,15 @@ class StoreProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
+            'name' => [
+                'required',
+                'string',
+                'max:200',
+                Rule::unique('projects')->where(function ($query) {
+                    return $query->where('name', $this->name)
+                        ->where('start_date', $this->start_date);
+                }),
+            ],
             'description' => 'required|string',
             'manager_id' => [
                 'required',
@@ -32,7 +40,8 @@ class StoreProjectRequest extends FormRequest
         return [
             'name.required' => 'Please provide a name for the project',
             'name.string' => 'The project name must be text only',
-            'name.max' => 'The project name cannot exceed 100 characters',
+            'name.max' => 'The project name cannot exceed 200 characters',
+            'name.unique' => 'A project with this name already exists for the given start date',
 
             'description.required' => 'Please provide a description for the project',
             'description.string' => 'The project description must be text only',

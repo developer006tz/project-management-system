@@ -22,4 +22,9 @@ class ProjectPolicy
     {
         return $user->isAdmin() || $user->isManager();
     }
+
+    public function update(User $user, ?Project $project = null): bool
+    {
+        return $user->isAdmin() || $user->isManager();
+    }
 }

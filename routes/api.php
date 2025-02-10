@@ -22,8 +22,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         $project->post('/projects', [ProjectController::class, 'createProject'])->middleware('role:admin,manager');
         $project->get('/projects', [ProjectController::class, 'viewAllProjects']);
         $project->get('/projects/{id}', [ProjectController::class, 'viewSingleProject']);
-        $project->put('/projects/{id}', [ProjectController::class, 'updateProject']);
-        $project->delete('/projects/{id}', [ProjectController::class, 'deleteProject']);
+        $project->put('/projects/{id}', [ProjectController::class, 'updateProject'])->middleware('role:admin,manager');
+        $project->delete('/projects/{id}', [ProjectController::class, 'deleteProject'])->middleware('role:admin,manager');
     });
 
 });

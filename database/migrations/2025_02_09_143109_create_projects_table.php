@@ -16,6 +16,8 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
+
+            $table->unique(['name', 'start_date']);
         });
     }
 
