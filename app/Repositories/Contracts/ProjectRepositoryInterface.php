@@ -3,7 +3,6 @@
 namespace App\Repositories\Contracts;
 
 use App\Models\Project;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ProjectRepositoryInterface
 {
@@ -11,7 +10,7 @@ interface ProjectRepositoryInterface
 
     public function findById(int $id): Project;
 
-    public function getAll(array $filters = [], int $perPage = 10): LengthAwarePaginator;
+    public function getAll(array $filters = [], int $perPage = 10);
 
     public function update(Project $project, array $attributes): bool;
 

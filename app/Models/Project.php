@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -32,5 +33,12 @@ class Project extends Model
     public function tasks()
     {
         return $this->hasMany(Task::class);
+    }
+
+    public function scopeWhereUserHasTasks(Builder $query, int $userId): Builder
+    {
+        return $query->whereHas('tasks', function ($query) use ($userId) {
+            $query->where('assignee_id', $userId);
+        });
     }
 }

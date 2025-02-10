@@ -4,7 +4,6 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\Project;
 use App\Repositories\Contracts\ProjectRepositoryInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ProjectRepository implements ProjectRepositoryInterface
 {
@@ -20,13 +19,19 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function getAll(array $filters = [], int $perPage = 10): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 10)
     {
         $query = $this->model->with('manager');
 
+        $user = request()->user();
+
+        if ($user->isUser()) {
+            $query = $this->model->whereUserHasTasks($user->id)->with('manager');
+        }
+
         if (! empty($filters['search'])) {
-            $query->where(\DB::raw('LOWER(name)'), 'like', '%' . strtolower($filters['search']) . '%')
-                ->orWhere(\DB::raw('LOWER(description)'), 'like', '%' . strtolower($filters['search']) . '%');
+            $query->where(\DB::raw('LOWER(name)'), 'like', '%'.strtolower($filters['search']).'%')
+                ->orWhere(\DB::raw('LOWER(description)'), 'like', '%'.strtolower($filters['search']).'%');
         }
 
         if (! empty($filters['manager_id'])) {
