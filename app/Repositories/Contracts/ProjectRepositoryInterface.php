@@ -11,7 +11,7 @@ interface ProjectRepositoryInterface
 
     public function findById(int $id): Project;
 
-    public function getAll(int $perPage = 10): LengthAwarePaginator;
+    public function getAll(array $filters = [], int $perPage = 10): LengthAwarePaginator;
 
     public function update(Project $project, array $attributes): bool;
 

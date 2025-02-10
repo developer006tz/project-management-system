@@ -20,9 +20,32 @@ class ProjectRepository implements ProjectRepositoryInterface
         return $this->model->findOrFail($id);
     }
 
-    public function getAll(int $perPage = 10): LengthAwarePaginator
+    public function getAll(array $filters = [], int $perPage = 10): LengthAwarePaginator
     {
-        return $this->model->with('manager')->paginate($perPage);
+        $query = $this->model->with('manager');
+
+        if (! empty($filters['search'])) {
+            $query->where(\DB::raw('LOWER(name)'), 'like', '%' . strtolower($filters['search']) . '%')
+                ->orWhere(\DB::raw('LOWER(description)'), 'like', '%' . strtolower($filters['search']) . '%');
+        }
+
+        if (! empty($filters['manager_id'])) {
+            $query->where('manager_id', $filters['manager_id']);
+        }
+
+        if (! empty($filters['start_date'])) {
+            $query->where('start_date', '>=', $filters['start_date']);
+        }
+
+        if (! empty($filters['end_date'])) {
+            $query->where('end_date', '<=', $filters['end_date']);
+        }
+
+        $sortField = $filters['sort_by'] ?? 'created_at';
+        $sortDirection = $filters['sort_direction'] ?? 'desc';
+        $query->orderBy($sortField, $sortDirection);
+
+        return $query->paginate($perPage);
     }
 
     public function update(Project $project, array $attributes): bool

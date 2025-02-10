@@ -18,9 +18,9 @@ class ProjectService
         return new ProjectResource($project);
     }
 
-    public function getAllProjects(int $perPage = 10)
+    public function getAllProjects(array $filters = [], int $perPage = 10)
     {
-        $projects = $this->projectRepository->getAll($perPage);
+        $projects = $this->projectRepository->getAll($filters, $perPage);
 
         return $projects;
     }

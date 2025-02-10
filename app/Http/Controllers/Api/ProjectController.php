@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Requests\ViewAllProjectsRequest;
 use App\Services\ProjectService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,10 +28,11 @@ class ProjectController extends Controller
         );
     }
 
-    public function viewAllProjects(Request $request): JsonResponse
+    public function viewAllProjects(ViewAllProjectsRequest $request): JsonResponse
     {
+        $filters = $request->validated();
         $perPage = $request->input('per_page', 10);
-        $projects = $this->projectService->getAllProjects($perPage);
+        $projects = $this->projectService->getAllProjects($filters, $perPage);
 
         return $this->successResponse(
             $projects,
