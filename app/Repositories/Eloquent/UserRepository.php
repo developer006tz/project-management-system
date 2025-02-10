@@ -18,4 +18,15 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->model->create($attributes);
     }
+
+    public function findById(int $id): User
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    public function update(User $user, array $attributes): bool
+    {
+        return $user->update($attributes);
+    }
+       
 }

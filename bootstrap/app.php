@@ -9,6 +9,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -40,6 +41,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 $errorCode = match (true) {
                     $e instanceof AuthenticationException => 'unauthenticated',
                     $e instanceof AuthorizationException => 'unauthorized',
+                    $e instanceof AccessDeniedHttpException => 'unauthorized',
                     $e instanceof ModelNotFoundException => 'model_not_found',
                     $e instanceof NotFoundHttpException => 'endpoint_not_found',
                     $e instanceof MethodNotAllowedHttpException => 'method_not_allowed',
@@ -55,6 +57,7 @@ return Application::configure(basePath: dirname(__DIR__))
                         ModelNotFoundException::class => 'The requested resource could not be found in our system',
                         AuthenticationException::class => 'Please sign in to access this resource',
                         AuthorizationException::class => 'You do not have permission to perform this action',
+                        AccessDeniedHttpException::class =>  'You do not have permission to perform this action',
                         NotFoundHttpException::class => 'The requested URL endpoint was not found on our server',
                         MethodNotAllowedHttpException::class => 'This type of request is not supported for this endpoint',
                         ThrottleRequestsException::class => 'Request limit exceeded. Please try again later',
