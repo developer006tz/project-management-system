@@ -27,14 +27,18 @@ class AuthTest extends TestCase
 
     public function test_successfull_register()
     {
-        //TODO:: i have to simulate loged-in user(admin) in order to register user
+        $admin = User::factory()->create(['role'=> 'admin',]);
+        $token = $admin->createToken('auth_token')->plainTextToken;
     
-        $response = $this->postJson('/api/register', [
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->postJson('/api/register', [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'role' => fake()->randomElement(['manager','admin','user']),
-            'password' => Hash::make('password'),
+            'password' => 'password',
+            'password_confirmation'=> 'password'
         ]);
-        $response->assertOk();
+        $response->assertCreated();
     }
 }
