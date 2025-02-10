@@ -22,7 +22,7 @@ class ProjectService
     {
         $projects = $this->projectRepository->getAll($perPage);
 
-        return ProjectResource::collection($projects);
+        return $projects;
     }
 
     public function getProject(int $id): ProjectResource

@@ -16,6 +16,14 @@ class Project extends Model
         'end_date',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'created_at' => 'datetime:Y-m-d H:i:s',
+            'updated_at' => 'datetime:Y-m-d H:i:s',
+        ];
+    }
+
     public function manager()
     {
         return $this->belongsTo(User::class, 'manager_id');
